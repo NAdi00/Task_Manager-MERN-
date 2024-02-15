@@ -4,7 +4,6 @@ const express = require('express');
 const ChannelModel = require('./modules/Channel')
 const cors = require('cors');
 const bodyParser = require( "body-parser" );
-const { MongoClient } = require('mongodb');
 
 const app = express();
 
@@ -36,17 +35,14 @@ function InitialisingConnection() {
         }
     })
 }
-function closingConnection() {
-    console.log('Remember to close connection');
-}
     
-    /////////////////////INSERT NEW DATA TO MONGODB DATABASE///////////////
-    app.get('/insert', (req, res) => {
-        InitialisingConnection();
-        const user = new ChannelModel({
-            id : 5,
-            text : 'Max',
-            day : 'Maxflows@gmail.com',
+/////////////////////INSERT NEW DATA TO MONGODB DATABASE///////////////
+app.get('/insert', (req, res) => {
+    InitialisingConnection();
+    const user = new ChannelModel({
+        id : 5,
+        text : 'Max',
+        day : 'Maxflows@gmail.com',
             reminder : true
         });
         user.save().then(()=>{
@@ -56,43 +52,19 @@ function closingConnection() {
         })
         ////close connetion  ---TO DO
     })
-
-    //////////////////DELETE DATA FROM THE DATABASE///////////////////////////
-function deleting() {
-    const uri = 'mongodb://localhost:27017';
-
-    // Database Name
-    const dbName = 'mern_1';
-    const client = new MongoClient(uri);
-    client.connect()
-    .then('Mongodb connected not from mongoose')
-
-    // Access a database
-    const database = client.db(dbName);
-    const collection = database.collection('my_collection');
-
-    // Delete documents that match a condition
-    const result = collection.deleteMany({ id:2});
-
-    console.log(`${result.deletedCount} documents deleted`);
-}
-
-app.get('/deleting', () => {
-    deleting();
-})
-
-    ////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
-    app.get('/read', (req, res) => {
-        InitialisingConnection();
-        ChannelModel.find().
+    
+////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
+app.get('/read', (req, res) => {
+    InitialisingConnection();
+    ChannelModel.find().
         then(data => {return res.json(data);})
         .catch(err => {
             console.log(err);
-        })
-        ////CLOSE CONNECTION TO DO
     })
+    ////CLOSE CONNECTION TO DO
+})
 
-    //////////STARTING THE SERVER/DEPLOYMENT//////////////////////
-    app.listen(5051, () => {
-        console.log('listing to port 5051');
-    });
+//////////STARTING THE SERVER/DEPLOYMENT//////////////////////
+app.listen(5051, () => {
+    console.log('listing to port 5051');
+});
