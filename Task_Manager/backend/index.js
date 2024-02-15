@@ -57,7 +57,7 @@ function closingConnection() {
     })
 
     //////////////////DELETE DATA FROM THE DATABASE///////////////////////////
-    app.get('/Playing', (req, res) => {
+    app.get('/playing', (req, res) => {
         InitialisingConnection();
         // Delete documents that match a condition
         // const deleteResult = ChannelModel.findByIdAndDelete("65ce0a30abcca89586f95bcf");
