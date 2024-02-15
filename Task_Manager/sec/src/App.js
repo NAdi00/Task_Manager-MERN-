@@ -4,9 +4,11 @@ import Header from './modules/Header';
 import Tasks from './modules/Tasks';
 import axios from 'axios';
 
-coms
+var global_data = [];
 
 function App() {
+
+
   //////Fecting data from backend,  node.js <- Mongodb
   useEffect((data_main) => {
     const fetchData = async (data_main) => {
@@ -16,9 +18,7 @@ function App() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            for (const i of data) {
-              global_data.push(i); 
-            }
+            global_data = data;
             setTasks(data)
             console.log(global_data, 'global_data1');
         } catch (error) {
@@ -28,10 +28,11 @@ function App() {
     
     fetchData();
 }, []);
-console.log(global_data, 'global_data4');
 
-const [state, setTasks] = useState (global_data);
+
 /////Initial state to be used when app is opened
+const [state, setTasks] = useState (global_data);
+
 
 ///////////ADDING NEW TASK FUNCTION///////////////////////
 function handleAddTask()  {
@@ -42,7 +43,7 @@ function handleAddTask()  {
     let BB = [...state, {id:`${newId}`, text: tesk, day: `${day}`}];
     setTasks([...BB]);
 }
-  //////////////DELETING TASK FUNCTION///////////////////////
+//////////////DELETING TASK FUNCTION///////////////////////
 function DeleteTask(my_input) {
   setTasks(state.filter((el)=> el.id !== my_input));
 }

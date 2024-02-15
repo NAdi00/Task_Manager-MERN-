@@ -24,7 +24,8 @@ app.get('/', async (req, res) => {
     res.status(201).send('<h1>Hello Node main page</h1>')
 })
 
-mongoose.connect('mongodb://localhost:27017/mern_1')
+function InitialisingConnection() {
+    mongoose.connect('mongodb://localhost:27017/mern_1')
     .then(() => {
         console.log('Connected to MongoDB!');
         })
@@ -33,13 +34,18 @@ mongoose.connect('mongodb://localhost:27017/mern_1')
             console.log(error);
         }
     })
+}
+function closingConnection() {
+    console.log('Remember to close connection');
+}
     
     /////////////////////INSERT NEW DATA TO MONGODB DATABASE///////////////
     app.get('/insert', (req, res) => {
+        InitialisingConnection();
         const user = new ChannelModel({
-            id : 7,
-            text : 'Nasta',
-            day : 'hi11@gmail.com',
+            id : 5,
+            text : 'Max',
+            day : 'Maxflows@gmail.com',
             reminder : true
         });
         user.save().then(()=>{
@@ -47,40 +53,27 @@ mongoose.connect('mongodb://localhost:27017/mern_1')
         }).catch((err)=>{
             console.log(err);
         })
+        ////close connetion  ---TO DO
     })
 
     //////////////////DELETE DATA FROM THE DATABASE///////////////////////////
-    // app.get('/delete', () => {
-
-    //     mongoose.connect('mongodb://localhost:27017/mern_1')
-    // .then(() => {
-    //     console.log('Connected to MongoDB!');
-    //     })
-    // .catch((error) => {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    // })
-    //     try {
-    //         // Delete documents that match a condition
-    //         const deleteResult = ChannelModel.findByIdAndDelete(2);
-    
-    //         console.log(`${deleteResult.deletedCount} documents deleted`);
-    //     } catch (error) {
-    //         console.error('Error deleting data:', error);
-    //     } finally {
-    //         // Disconnect from MongoDB
-    //         mongoose.disconnect();
-    //     }
-    // })
+    app.get('/Playing', (req, res) => {
+        InitialisingConnection();
+        // Delete documents that match a condition
+        // const deleteResult = ChannelModel.findByIdAndDelete("65ce0a30abcca89586f95bcf");
+        // console.log(`${deleteResult.deletedCount} documents deleted`);
+        console.log('hello');
+    })
 
     ////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
     app.get('/read', (req, res) => {
+        InitialisingConnection();
         ChannelModel.find().
         then(data => {return res.json(data);})
         .catch(err => {
             console.log(err);
         })
+        ////CLOSE CONNECTION TO DO
     })
 
     //////////STARTING THE SERVER/DEPLOYMENT//////////////////////
