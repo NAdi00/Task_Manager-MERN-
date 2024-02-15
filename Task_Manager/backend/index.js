@@ -77,8 +77,9 @@ function deleting() {
     console.log(`${result.deletedCount} documents deleted`);
 }
 
-
-closeConnection();
+app.get('/deleting', () => {
+    deleting();
+})
 
     ////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
     app.get('/read', (req, res) => {
@@ -95,4 +96,3 @@ closeConnection();
     app.listen(5051, () => {
         console.log('listing to port 5051');
     });
-
