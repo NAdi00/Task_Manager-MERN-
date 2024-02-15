@@ -4,6 +4,7 @@ const express = require('express');
 const ChannelModel = require('./modules/Channel')
 const cors = require('cors');
 const bodyParser = require( "body-parser" );
+const { MongoClient } = require('mongodb');
 
 const app = express();
 
@@ -57,13 +58,27 @@ function closingConnection() {
     })
 
     //////////////////DELETE DATA FROM THE DATABASE///////////////////////////
-    app.get('/playing', (req, res) => {
-        InitialisingConnection();
-        // Delete documents that match a condition
-        // const deleteResult = ChannelModel.findByIdAndDelete("65ce0a30abcca89586f95bcf");
-        // console.log(`${deleteResult.deletedCount} documents deleted`);
-        console.log('hello');
-    })
+function deleting() {
+    const uri = 'mongodb://localhost:27017';
+
+    // Database Name
+    const dbName = 'mern_1';
+    const client = new MongoClient(uri);
+    client.connect()
+    .then('Mongodb connected not from mongoose')
+
+    // Access a database
+    const database = client.db(dbName);
+    const collection = database.collection('my_collection');
+
+    // Delete documents that match a condition
+    const result = collection.deleteMany({ id:2});
+
+    console.log(`${result.deletedCount} documents deleted`);
+}
+
+
+closeConnection();
 
     ////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
     app.get('/read', (req, res) => {
@@ -80,3 +95,4 @@ function closingConnection() {
     app.listen(5051, () => {
         console.log('listing to port 5051');
     });
+
