@@ -40,7 +40,9 @@ function handleAddTask()  {
     let newId = Math.max(...state.map(task => task.id), 0) + 1;
     let day = input2.value;
     let tesk = input.value;
-    let BB = [...state, {id:`${newId}`, text: tesk, day: `${day}`}];
+    let temp_month = Number(day.slice(5, 7))-1;
+    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    let BB = [...state, {id:`${newId}`, text: tesk, day: `2024// ${months[temp_month]} ${day.slice(8)}`}];
     setTasks([...BB]);
 }
 //////////////DELETING TASK FUNCTION///////////////////////
