@@ -40,9 +40,9 @@ function InitialisingConnection() {
 app.get('/insert', (req, res) => {
     InitialisingConnection();
     const user = new ChannelModel({
-        id : 5,
-        text : 'Max',
-        day : 'Maxflows@gmail.com',
+        id : 1,
+        text : 'Lawrence',
+        day : 'Lawrence@gmail.com',
             reminder : true
         });
         user.save().then(()=>{

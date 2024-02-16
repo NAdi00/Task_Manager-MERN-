@@ -14,3 +14,6 @@
 .cross {
   float: right;
 }
+#inputs {
+  width:50%;height: 30px;
+}

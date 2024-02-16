@@ -25,7 +25,6 @@ function App() {
             console.error('Error fetching data:', error);
         }
     };
-    
     fetchData();
 }, []);
 
@@ -37,8 +36,9 @@ const [state, setTasks] = useState (global_data);
 ///////////ADDING NEW TASK FUNCTION///////////////////////
 function handleAddTask()  {
     var input = document.getElementById('inputs');
+    var input2 = document.getElementById('inputs2');
     let newId = Math.max(...state.map(task => task.id), 0) + 1;
-    let day = new Date().toLocaleDateString();
+    let day = input2.value;
     let tesk = input.value;
     let BB = [...state, {id:`${newId}`, text: tesk, day: `${day}`}];
     setTasks([...BB]);
