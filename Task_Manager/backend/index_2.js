@@ -1,19 +1,23 @@
 const express = require('express');
-/* const bodyParser = require("body-parser"); */
-const ChannelModel = require('./modules/Channel')
 const cors = require('cors');
 const bodyParser = require( "body-parser" );
 const { MongoClient } = require('mongodb');
 
-//URL
-const uri = 'mongodb://localhost:27017';
-
-// Database Name
-const dbName = 'mern_1';
-
 const app = express();
+app.use(cors());
 
-app.use(cors())
+////////STARTING SERVER
+app.listen(5051, () => {
+    console.log('listing to port 5051');
+});
+
+// //URL
+// const uri = 'mongodb://localhost:27017';
+
+// // Database Name
+// const dbName = 'mern_1';
+
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -29,9 +33,6 @@ app.post('/fromFront', (req, res) => {
 app.get('/', async (req, res) => {
     res.status(201).send('<h1>Hello Node main page</h1>')
 })
-
-function InitialisingConnection() {    
-}
     
 /////////////////////INSERT NEW DATA TO MONGODB DATABASE///////////////
 app.get('/insert', (req, res) => {
@@ -49,7 +50,7 @@ app.get('/insert', (req, res) => {
     const collection = database.collection('my_collection');
 
     // Insert a single document
-    const singleInsertResult = collection.insertOne({ key:  });
+    const singleInsertResult = collection.insertOne({ key: 2});
 
     console.log(`Inserted ${singleInsertResult.insertedCount} document`);
 
@@ -63,41 +64,38 @@ app.get('/insert', (req, res) => {
 })
     
 ////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
-app.get('/read', (req, res) => {
-    const client = new MongoClient(uri);
+// app.get('/read', (req, res) => {
+//     const client = new MongoClient(uri);
 
-    try {
-        // Connect to the MongoDB server
-        await client.connect();
+//     try {
+//         // Connect to the MongoDB server
+//         client.connect();
 
-        console.log('Connected to MongoDB');
+//         console.log('Connected to MongoDB');
 
-        // Access a database
-        const database = client.db(dbName);
+//         // Access a database
+//         const database = client.db(dbName);
 
-        // Access a collection
-        const collection = database.collection('my_collection');
+//         // Access a collection
+//         const collection = database.collection('my_collection');
 
-        // Find all documents in the collection
-        const cursor = collection.find();
+//         // Find all documents in the collection
+//         const cursor = collection.find();
 
-        // Iterate over the documents
-        await cursor.forEach(document => {
-            console.log(document);
-        });
+//         // Iterate over the documents
+//         cursor.forEach(document => {
+//             console.log(document);
+//         });
 
-        // Alternatively, you can use toArray() to retrieve all documents as an array
-        // const documentsArray = await cursor.toArray();
-        // console.log(documentsArray);
+//         // Alternatively, you can use toArray() to retrieve all documents as an array
+//         // const documentsArray = await cursor.toArray();
+//         // console.log(documentsArray);
 
-        // Find a single document in the collection
-        const singleDocument = await collection.findOne({ /* Your query criteria */ });
-        console.log(singleDocument);
+//         // Find a single document in the collection
+//         const singleDocument = await collection.findOne({ /* Your query criteria */ });
+//         console.log(singleDocument);
 
-    }
-})
+//     }
+// })
 
 //////////STARTING THE SERVER/DEPLOYMENT//////////////////////
-app.listen(5051, () => {
-    console.log('listing to port 5051');
-});
