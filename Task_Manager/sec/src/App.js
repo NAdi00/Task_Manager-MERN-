@@ -28,10 +28,8 @@ function App() {
     fetchData();
 }, []);
 
-
 /////Initial state to be used when app is opened
 const [state, setTasks] = useState (global_data);
-
 
 ///////////ADDING NEW TASK FUNCTION///////////////////////
 function handleAddTask()  {
@@ -52,7 +50,6 @@ function DeleteTask(my_input) {
 
 ////////////////SENDING DATA FROM REACT TO BACKEND(node.js -> mongodb)
 function sending(event) {
-
     event.preventDefault();
     axios.post('http://localhost:5051/fromFront', {state})//Sending data from current tasks/state (setted state)
       .then(response => {
