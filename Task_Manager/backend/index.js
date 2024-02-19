@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const express = require('express');
-/* const bodyParser = require("body-parser"); */
 const ChannelModel = require('./modules/Channel')
 const cors = require('cors');
 const bodyParser = require( "body-parser" );
@@ -18,6 +17,8 @@ app.use(bodyParser.json());
 app.post('/fromFront', (req, res) => {
   const receivedData = req.body;
   res.send(receivedData);
+  ////Update data in databse
+  UpdateDataInDtabase(receivedData);
 });
 
 app.get('/', async (req, res) => {
@@ -40,7 +41,6 @@ function InitialisingConnection() {
 app.get('/insert', (req, res) => {
     InitialisingConnection();
     const user = new ChannelModel({
-        id : 1,
         text : 'Lawrence',
         day : 'Lawrence@gmail.com',
             reminder : true
@@ -63,6 +63,30 @@ app.get('/read', (req, res) => {
     })
     ////CLOSE CONNECTION TO DO
 })
+
+function UpdateDataInDtabase(myInputs) {
+    //////Compare data from frontend and last update from mongodb
+    ChannelModel.deleteMany({}, (err, result) => {
+        if (err) {
+          console.error('Error deleting documents:', err);
+          return;
+        }
+        console.log('Documents deleted:', result.deletedCount);
+    });
+    for (const i of myInputs) {
+        const user = new ChannelModel({
+            text : i.text,
+            day : i.day,
+                reminder : true
+            });
+            user.save().then(()=>{
+                res.send(`User ${user.text} has been added!`);
+            }).catch((err)=>{
+                console.log(err);
+            })
+    }
+
+}
 
 //////////STARTING THE SERVER/DEPLOYMENT//////////////////////
 app.listen(5051, () => {
