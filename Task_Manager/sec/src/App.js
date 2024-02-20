@@ -51,6 +51,7 @@ function DeleteTask(my_input) {
 ////////////////SENDING DATA FROM REACT TO BACKEND(node.js -> mongodb)
 function sending(event) {
     event.preventDefault();
+    console.log(state);
     axios.post('http://localhost:5051/fromFront', {state})//Sending data from current tasks/state (setted state)
       .then(response => {
         console.log(response.data)

@@ -3,7 +3,6 @@ const express = require('express');
 const ChannelModel = require('./modules/Channel')
 const cors = require('cors');
 const bodyParser = require( "body-parser" );
-const readline =require('readline');
 
 const app = express();
 
@@ -17,10 +16,10 @@ app.use(bodyParser.json());
 // Handle POST request//Receiving data from client/frontend
 app.post('/fromFront', (req, res) => {
     InitialisingConnection()
-  const receivedData = req.body;
-  res.send(receivedData);
+//   const receivedData = req.body;
+  res.send(req);
   ////Update data in databse
-  UpdateDataInDatabase(receivedData);
+//   UpdateDataInDatabase(receivedData);
 });
 
 app.get('/', async (req, res) => {
@@ -47,7 +46,10 @@ app.get('/read', (req, res) => {
         .catch(err => {
             console.log(err);
     })
-    mongoose.connection.close();
+    setTimeout(() => {
+        mongoose.connection.close();
+        console.log('closed');
+    }, 1000);
 })
 
 /////This function will sync data sent by frontend and data in the database
@@ -85,7 +87,10 @@ function UpdateDataInDatabase(myInputs) {
                     })
                 }
             }
-            mongoose.connection.close();
+            setTimeout(() => {
+                mongoose.connection.close();
+                console.log('closed');
+            }, 5000);
         })
         .catch(err => {
             console.log(err);
