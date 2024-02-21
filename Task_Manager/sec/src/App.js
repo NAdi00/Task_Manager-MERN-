@@ -8,7 +8,6 @@ var global_data = [];
 
 function App() {
 
-
   //////Fecting data from backend,  node.js <- Mongodb
   useEffect((data_main) => {
     const fetchData = async (data_main) => {
@@ -19,8 +18,7 @@ function App() {
             }
             const data = await response.json();
             global_data = data;
-            setTasks(data)
-            console.log(global_data, 'global_data1');
+            setTasks(global_data)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -40,8 +38,8 @@ function handleAddTask()  {
     let tesk = input.value;
     let temp_month = Number(day.slice(5, 7))-1;
     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    let BB = [...state, {id:`${newId}`, text: tesk, day: `2024// ${months[temp_month]} ${day.slice(8)}`}];
-    setTasks([...BB]);
+    global_data = [...global_data, {id:`${newId}`, text: tesk, day: `2024// ${months[temp_month]} ${day.slice(8)}`}];
+    setTasks(global_data);
 }
 //////////////DELETING TASK FUNCTION///////////////////////
 function DeleteTask(my_input) {
@@ -51,8 +49,8 @@ function DeleteTask(my_input) {
 ////////////////SENDING DATA FROM REACT TO BACKEND(node.js -> mongodb)
 function sending(event) {
     event.preventDefault();
-    console.log(state);
-    axios.post('http://localhost:5051/fromFront', {state})//Sending data from current tasks/state (setted state)
+    console.log(global_data);
+    axios.post('http://localhost:5051/fromFront', {global_data})//Sending data from current tasks/state (setted state)
       .then(response => {
         console.log(response.data)
       })

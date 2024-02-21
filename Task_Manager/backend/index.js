@@ -16,8 +16,9 @@ app.use(bodyParser.json());
 // Handle POST request//Receiving data from client/frontend
 app.post('/fromFront', (req, res) => {
     InitialisingConnection()
-//   const receivedData = req.body;
-  res.send(req);
+  const receivedData = req.body;
+  res.json(req.body);
+  console.log(req.body, 'yellow');
   ////Update data in databse
 //   UpdateDataInDatabase(receivedData);
 });
@@ -37,7 +38,7 @@ function InitialisingConnection() {
         }
     })
 }
-    
+
 ////////////////////READ DATA FROM MONGODB DATABASE//////////////////////
 app.get('/read', (req, res) => {
     InitialisingConnection();
@@ -51,6 +52,20 @@ app.get('/read', (req, res) => {
         console.log('closed');
     }, 1000);
 })
+
+app.get('/insert', (req, res) => {
+    InitialisingConnection();
+    const dataToInsert = new ChannelModel({
+        text: 'Hello again on htttp error',
+        day: 'today',
+        reminder: true
+    })
+    dataToInsert.save().then(()=>{
+        res.send(`User ${dataToInsert.text} has been added!`);
+    }).catch((err)=>{
+        console.log(err);
+    })
+});
 
 /////This function will sync data sent by frontend and data in the database
 function UpdateDataInDatabase(myInputs) {
