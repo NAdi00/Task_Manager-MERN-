@@ -52,7 +52,7 @@ function sending(event) {
     console.log(global_data);
     axios.post('http://localhost:5051/fromFront', {global_data})//Sending data from current tasks/state (setted state)
       .then(response => {
-        console.log(response.data)
+        console.log(response)
       })
       .catch(error => {
         console.error('Error sending data:', error);

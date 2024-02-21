@@ -20,7 +20,7 @@ app.post('/fromFront', (req, res) => {
   res.json(req.body);
   console.log(req.body, 'yellow');
   ////Update data in databse
-//   UpdateDataInDatabase(receivedData);
+  UpdateDataInDatabase(receivedData);
 });
 
 app.get('/', async (req, res) => {
