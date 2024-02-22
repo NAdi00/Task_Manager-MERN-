@@ -1,6 +1,9 @@
 MERN Task Manager
 
+Discription:
+
 A simple Task Manager application built using the MERN (MongoDB, Express.js, React.js, Node.js) stack. This application allows users to create, manage, and track their tasks effectively.
+With this application, users can easily create new tasks, update existing ones, mark tasks as completed, and delete tasks when necessary. The application offers a user-friendly interface that allows for effortless task organization and prioritization.
 
 Features:
 
